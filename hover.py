@@ -4,16 +4,6 @@ from time import sleep, time
 from djitellopy import tello
 import movement as move
 
-fSpeed = 117 / 10  # Forward Speed in cm/s   (15cm/s)
-
-aSpeed = 360 / 10  # Angular Speed Degrees/s  (50d/s)
-
-interval = 0.25
-
-dInterval = fSpeed * interval
-
-aInterval = aSpeed * interval
-
 me = tello.Tello()
 me.connect()
 print(me.get_battery())
