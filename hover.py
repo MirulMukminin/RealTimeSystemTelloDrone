@@ -9,6 +9,8 @@ me.connect()
 print(me.get_battery())
 
 me.takeoff()
+me.send_rc_control(0, 0, 10 ,0)
+sleep(2)
 
 x, y = 0, 0
 
