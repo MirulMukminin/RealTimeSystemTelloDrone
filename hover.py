@@ -25,7 +25,7 @@ def hover():
 def moving():
     global x, y
 
-    if (isMaskCount()):
+    if isMaskCount():
         if x == 0 and y == 0:
             moveForward(y)
             rotateAndDetect()
@@ -104,7 +104,7 @@ def returntoBaseLand(x, y):
 
 
 def isMaskCount():
-    if totalMaskCount >= 0:
+    if totalMaskCount > 0:
         return True
     else:
         return False
