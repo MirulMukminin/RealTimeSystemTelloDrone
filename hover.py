@@ -25,6 +25,7 @@ def hover():
 def moving():
     global x, y
 
+
     if isMaskCount():
         if x == 0 and y == 0:
             moveForward(y)
