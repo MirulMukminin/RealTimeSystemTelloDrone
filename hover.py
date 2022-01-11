@@ -28,6 +28,7 @@ def moving():
     elif x == 5 and y == 0:
         rotateClockwise()
         backToBase(x)
+        rotateClockwise()
     else:
         if y == 4:
             rotateAndDetect()
