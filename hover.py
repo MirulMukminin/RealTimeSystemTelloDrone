@@ -9,10 +9,12 @@ me.connect()
 print(me.get_battery())
 
 me.takeoff()
-me.send_rc_control(0, 0, 10 ,0)
+me.stream_on()
+me.send_rc_control(0, 0, 10, 0)
 sleep(2)
 
 x, y = 0, 0
+totalMaskCount = 5
 
 
 def hover():
@@ -23,24 +25,32 @@ def hover():
 def moving():
     global x, y
 
-    if x == 0 and y == 0:
-        moveForward(y)
-    elif x == 5 and y == 0:
-        rotateClockwise()
-        backToBase(x)
-        rotateClockwise()
-    else:
-        if y == 4:
-            rotateAndDetect()
 
-            rotateClockwise()
-            move1Box(x)
-            moveBackward(y)
-        if y == 0:
-            rotateAndDetect()
-            rotateCounterClockwise()
-            move1Box(x)
+    if isMaskCount():
+        if x == 0 and y == 0:
             moveForward(y)
+            rotateAndDetect()
+        elif x == 5 and y == 0:
+            rotateClockwise()
+            backToBase(x)
+        else:
+            if y == 4:
+                rotateAndDetect()
+                rotateClockwise()
+                move1Box(x)
+                # added extra turn
+                rotateClockwise()
+                moveBackward(y)
+            if y == 0:
+                rotateAndDetect()
+                rotateCounterClockwise()
+                move1Box(x)
+                # added extra turn
+                rotateCounterClockwise()
+                moveForward(y)
+
+    elif not isMaskCount():
+        returnToBaseLand(x, y)
 
 
 def moveForward(y):
@@ -61,26 +71,65 @@ def move1Box(x):
     x += 1
 
 
-def rotateClockwise():
-    me.rotate_clockwise(90)
+def rotateClockwise(r=90):
+    me.rotate_clockwise(r)
 
 
-def rotateCounterClockwise():
-    me.rotate_counter_clockwise(90)
+def rotateCounterClockwise(r=90):
+    me.rotate_counter_clockwise(r)
 
 
 def backToBase(x):
     me.send_rc_control(0, 50, 0, 0)
     sleep(5)
     x -= 5
+    me.rotate_clockwise(90)
+
+
+def returntoBaseLand(x, y):
+    me.flip_back()
+    if y == 4:
+        me.send_rc_control(0, -50, 0, 0)
+        sleep(y)
+        rotateCounterClockwise()
+        y -= y
+    else:
+        rotateClockwise()
+
+    if x > 0:
+        me.send_rc_control(0, 50, 0, 0)
+        sleep(x)
+        x-=x
+
+    me.land()
+
+
+def isMaskCount():
+    if totalMaskCount > 0:
+        return True
+    else:
+        return False
 
 
 def rotateAndDetect():
-    i = 0
-    while i in range(4):
+    i = 1
+    while i in range(5):
         me.rotate_clockwise(90)
         sur_time = time.time() + 15
-        move.turnOnDetection(sur_time)
+        result = move.turnOnDetection(sur_time)
+        if result:
+            me.send_rc_control(0, 0, -30, 0)
+            sleep(2)
+            me.send_rc_control(0, 0, 0, 0)
+            sleep(10)
+            me.send_rc_control(0, 0, 30, 0)
+            sleep(2)
+            totalMaskCount -= 1
+
+        if (isMaskCount() == False):
+            me.rotate_counter_clockwise(i * 90)
+            break
+
         i += 1
     '''
     if detect a person not wearing mask
