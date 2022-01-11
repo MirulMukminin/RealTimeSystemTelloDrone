@@ -7,11 +7,6 @@ import detect_mask_video as detect
 
 i = 0
 
-me = tello.Tello()
-me.connect()
-me.takeoff()
-me.stream_on()
-
 #cap = cv2.VideoCapture(0)
 
 # Travel to/from starting checkpoint 0 from/to the charging base
@@ -33,7 +28,7 @@ def turnOnDetection(t_end):
 
         if (newframe == True):
             # do landing procedure
-            print("poop")
+            return True
             break
         elif (newframe == "Mask"):
             i = 0
@@ -44,8 +39,9 @@ def turnOnDetection(t_end):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # me.land()
             break
+    return false
 
-
+'''
 def main():
     me.move_up(100)
     me.move(frombase[0], frombase[1])
@@ -79,7 +75,7 @@ def main():
 
 
 main()
-
+'''
 
 
 
