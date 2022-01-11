@@ -117,7 +117,12 @@ def rotateAndDetect():
         sur_time = time.time() + 15
         result = move.turnOnDetection(sur_time)
         if result:
-            # do landiding (aiman)
+            me.send_rc_control(0, 0, -30, 0)
+            sleep(2)
+            me.send_rc_control(0, 0, 0, 0)
+            sleep(10)
+            me.send_rc_control(0, 0, 30, 0)
+            sleep(2)
             totalMaskCount -= 1
 
         if (isMaskCount() == False):
