@@ -1,4 +1,4 @@
-#RTS Project for Tello Drone
+# RTS Project for Tello Drone
 
 A Tello drone is a mini drone equipped with an HD camera. It is an impressive and programmable drone which is perfect for education uses. It helps the users to learn about drones and how to control the drone by using a programming language. This tello drone also used DJI Flight technology, which is an Industry-leading component to ensure stable flights.
 
