@@ -17,8 +17,10 @@ tobase = ["forward", 50]
 checkpoint = [[1, "cw", 0, "forward", 100], [2, "cw", 180, "forward", 100]]
 
 
-def turnOnDetection(t_end):
+def turnOnDetection(t_end, me):
+    global i
     while time.time() < t_end:
+
         #_, frame = cap.read()
         frame = me.get_frame_read().frame
 
@@ -39,7 +41,7 @@ def turnOnDetection(t_end):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # me.land()
             break
-    return false
+    return False
 
 '''
 def main():

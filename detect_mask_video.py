@@ -139,7 +139,7 @@ def start_detect(frame, i):
 		cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 		print(i)
 
-		if (i >= 30):
+		if (i >= 15):
 			print("Anti Masker found")
 			return True
 
